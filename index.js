@@ -120,6 +120,7 @@ export default class VideoPlayer extends Component {
     this.onSeek = this.onSeek.bind(this);
     this.resume = this.resume.bind(this);
     this.stop = this.stop.bind(this);
+    this.seek = this.seek.bind(this);
   }
 
   componentDidMount() {

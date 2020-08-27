@@ -512,6 +512,12 @@ export default class VideoPlayer extends Component {
           onLoad={this.onLoad}
           source={video}
           resizeMode={resizeMode}
+          bufferConfig={{
+            minBufferMs: 15 * 1000,
+            maxBufferMs: 30 * 1000,
+            bufferForPlaybackMs: 2500,
+            bufferForPlaybackAfterRebufferMs: 5000
+          }}
         />
         <View
           style={[

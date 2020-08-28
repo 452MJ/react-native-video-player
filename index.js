@@ -500,7 +500,7 @@ export default class VideoPlayer extends Component {
       ...props
     } = this.props;
 
-    const { progress } = this.state
+    const { progress, isPlaying } = this.state
 
     return (
       <View style={customStyles.videoWrapper}>
@@ -525,7 +525,7 @@ export default class VideoPlayer extends Component {
         />
 
         {
-          progress === 0 &&
+          (progress === 0 || !isPlaying) &&
           <Image source={thumbnail} style={[
             this.getSizeStyles(),
             {

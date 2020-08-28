@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Image, ImageBackground, Platform, StyleSheet, TouchableOpacity, View, ViewPropTypes, NativeModules } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Video from 'react-native-video';
-import {backgroundColor} from "react-native-tab-view/lib/typescript/example/src/CoverflowExample"; // eslint-disable-line
 
 const BackgroundImage = ImageBackground || Image; // fall back to Image if RN < 0.46
 
@@ -167,7 +166,7 @@ export default class VideoPlayer extends Component {
     }
     this.setState({
       progress: event.currentTime / (this.props.duration || this.state.duration),
-    });
+    },);
   }
 
   onEnd(event) {
@@ -498,9 +497,11 @@ export default class VideoPlayer extends Component {
       customStyles,
       bufferConfig,
       thumbnail,
-      progress,
       ...props
     } = this.props;
+
+    const { progress } = this.state
+
     return (
       <View style={customStyles.videoWrapper}>
         <Video
@@ -510,8 +511,8 @@ export default class VideoPlayer extends Component {
             this.getSizeStyles(),
             style,
             customStyles.video,
-            backgroundColor: 'black'
-            ]}
+            {backgroundColor: 'black'}
+          ]}
           ref={p => { this.player = p; }}
           muted={this.props.muted || this.state.isMuted}
           paused={!this.state.isPlaying}
@@ -532,6 +533,7 @@ export default class VideoPlayer extends Component {
             }
           ]}/>
         }
+
 
         <View
           style={[

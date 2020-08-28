@@ -495,6 +495,7 @@ export default class VideoPlayer extends Component {
       pauseOnPress,
       fullScreenOnLongPress,
       customStyles,
+      bufferConfig,
       ...props
     } = this.props;
     return (
@@ -515,12 +516,7 @@ export default class VideoPlayer extends Component {
           onLoad={this.onLoad}
           source={video}
           resizeMode={resizeMode}
-          bufferConfig={{
-            minBufferMs: 15 * 1000,
-            maxBufferMs: 30 * 1000,
-            bufferForPlaybackMs: 2500,
-            bufferForPlaybackAfterRebufferMs: 5000
-          }}
+          bufferConfig={bufferConfig}
         />
         <View
           style={[
@@ -620,6 +616,8 @@ VideoPlayer.propTypes = {
   onHideControls: PropTypes.func,
   onShowControls: PropTypes.func,
   onMutePress: PropTypes.func,
+  bufferConfig: PropTypes.object
+
 };
 
 VideoPlayer.defaultProps = {
@@ -633,4 +631,10 @@ VideoPlayer.defaultProps = {
   pauseOnPress: false,
   fullScreenOnLongPress: false,
   customStyles: {},
+  bufferConfig:{
+  minBufferMs: 15000,
+    maxBufferMs: 50000,
+    bufferForPlaybackMs: 2500,
+    bufferForPlaybackAfterRebufferMs: 5000
+}
 };

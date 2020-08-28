@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Image, ImageBackground, Platform, StyleSheet, TouchableOpacity, View, ViewPropTypes, NativeModules } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Video from 'react-native-video'; // eslint-disable-line
+import Video from 'react-native-video';
+import {backgroundColor} from "react-native-tab-view/lib/typescript/example/src/CoverflowExample"; // eslint-disable-line
 
 const BackgroundImage = ImageBackground || Image; // fall back to Image if RN < 0.46
 
@@ -496,6 +497,8 @@ export default class VideoPlayer extends Component {
       fullScreenOnLongPress,
       customStyles,
       bufferConfig,
+      thumbnail,
+      progress,
       ...props
     } = this.props;
     return (
@@ -507,7 +510,8 @@ export default class VideoPlayer extends Component {
             this.getSizeStyles(),
             style,
             customStyles.video,
-          ]}
+            backgroundColor: 'black'
+            ]}
           ref={p => { this.player = p; }}
           muted={this.props.muted || this.state.isMuted}
           paused={!this.state.isPlaying}
@@ -518,6 +522,17 @@ export default class VideoPlayer extends Component {
           resizeMode={resizeMode}
           bufferConfig={bufferConfig}
         />
+
+        {
+          progress === 0 &&
+          <Image source={thumbnail} style={[
+            this.getSizeStyles(),
+            {
+              position:'absolute'
+            }
+          ]}/>
+        }
+
         <View
           style={[
             this.getSizeStyles(),
@@ -632,9 +647,9 @@ VideoPlayer.defaultProps = {
   fullScreenOnLongPress: false,
   customStyles: {},
   bufferConfig:{
-  minBufferMs: 15000,
+    minBufferMs: 15000,
     maxBufferMs: 50000,
     bufferForPlaybackMs: 2500,
     bufferForPlaybackAfterRebufferMs: 5000
-}
+  }
 };

@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Video from 'react-native-video';
+import Slider from '@react-native-community/slider'
+
 
 const BackgroundImage = ImageBackground || Image; // fall back to Image if RN < 0.46
 
@@ -338,6 +340,7 @@ export default class VideoPlayer extends Component {
       clearTimeout(this.controlsTimeout);
       this.controlsTimeout = null;
     }
+    //不自动隐藏操作栏
     this.controlsTimeout = setTimeout(() => {
       this.setState({isControlsVisible: false});
     }, this.props.controlsTimeout);
@@ -388,7 +391,7 @@ export default class VideoPlayer extends Component {
         // style={[styles.playButton, customStyles.playButton]}
         onPress={this.onStartPress}
       >
-        <Image source={require('./assets/播放.png')}
+        <Image source={require('./assets/play.png')}
                resizeMode={'contain'}
                style={{
                  width: 42,
@@ -418,6 +421,33 @@ export default class VideoPlayer extends Component {
 
   renderSeekBar(fullWidth) {
     const {customStyles, disableSeek} = this.props;
+
+    return   <Slider
+      style={[
+        styles.seekBar,
+        fullWidth ? styles.seekBarFullWidth : {},
+        customStyles.seekBar,
+        fullWidth ? customStyles.seekBarFullWidth : {},
+      ]}
+      value={this.state.progress}
+      // step={1}
+      onValueChange={progress => {
+
+        this.setState({
+          progress:progress,
+        });
+
+        this.player.seek(progress * this.state.duration);
+      }}
+
+      minimumValue={0}
+      maximumValue={1}
+      minimumTrackTintColor="#FF0062"
+      maximumTrackTintColor={'#ff57a8'}
+      thumbTintColor={'#ff57a8'}
+    />
+
+
     return (
       <View
         style={[
@@ -474,14 +504,14 @@ export default class VideoPlayer extends Component {
           {/*  name={this.state.isPlaying ? 'pause' : 'play-arrow'}*/}
           {/*  size={32}*/}
           {/*/>*/}
-          <Image source={this.state.isPlaying ? require('./assets/暂停.png') : require('./assets/播放.png')}
-                 resizeMode={'contain'}
-                 style={{
-                   width: 20,
-                   height: 20,
-                   marginLeft: 10,
-                   marginRight: 10
-                 }}/>
+          <BackgroundImage source={this.state.isPlaying ? require('./assets/pause.png') : require('./assets/play.png')}
+                           resizeMode={'contain'}
+                           style={{
+                             width: 20,
+                             height: 20,
+                             marginLeft: 10,
+                             marginRight: 10
+                           }}/>
         </TouchableOpacity>
         {this.renderSeekBar()}
         {this.props.muted ? null : (
@@ -491,13 +521,13 @@ export default class VideoPlayer extends Component {
             {/*  name={this.state.isMuted ? 'volume-off' : 'volume-up'}*/}
             {/*  size={24}*/}
             {/*/>*/}
-            <Image source={this.state.isPlaying ? require('./assets/静音.png') : require('./assets/音量.png')}
-                   resizeMode={'contain'}
-                   style={{
-                     width: 20,
-                     height: 20,
-                     marginHorizontal: 5
-                   }}/>
+            <BackgroundImage source={this.state.isPlaying ? require('./assets/mute.png') : require('./assets/unmute.png')}
+                             resizeMode={'contain'}
+                             style={{
+                               width: 20,
+                               height: 20,
+                               marginHorizontal: 5
+                             }}/>
           </TouchableOpacity>
         )}
         {this.props.disableFullscreen ? null : (
@@ -507,13 +537,13 @@ export default class VideoPlayer extends Component {
             {/*  name="fullscreen"*/}
             {/*  size={32}*/}
             {/*/>*/}
-            <Image source={require('./assets/全屏.png')} resizeMode={'contain'}
-                   style={{
-                     width: 20,
-                     height: 20,
-                     marginLeft: 5,
-                     marginRight: 10
-                   }}/>
+            <BackgroundImage source={require('./assets/fullscreen.png')} resizeMode={'contain'}
+                             style={{
+                               width: 20,
+                               height: 20,
+                               marginLeft: 5,
+                               marginRight: 10
+                             }}/>
           </TouchableOpacity>
         )}
       </View>
@@ -676,7 +706,7 @@ VideoPlayer.defaultProps = {
   videoWidth: 1280,
   videoHeight: 720,
   autoplay: false,
-  controlsTimeout: 2000,
+  controlsTimeout: 5000,
   loop: false,
   resizeMode: 'contain',
   disableSeek: false,

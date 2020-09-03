@@ -306,6 +306,8 @@ export default class VideoPlayer extends Component {
   }
 
   onSeek(e) {
+    this.showControls();
+
     const diff = e.nativeEvent.pageX - this.seekTouchStart;
     const ratio = 100 / this.seekBarWidth;
     const progress = this.seekProgressStart + ((ratio * diff) / 100);
@@ -711,7 +713,7 @@ VideoPlayer.defaultProps = {
   videoWidth: 1280,
   videoHeight: 720,
   autoplay: false,
-  controlsTimeout: 5000,
+  controlsTimeout: 2000,
   loop: false,
   resizeMode: 'contain',
   disableSeek: false,

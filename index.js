@@ -396,6 +396,8 @@ export default class VideoPlayer extends Component {
                style={{
                  width: 42,
                  height: 42,
+                 marginHorizontal: 5,
+                 marginVertical: 10
                }}/>
       </TouchableOpacity>
     );
@@ -521,12 +523,13 @@ export default class VideoPlayer extends Component {
             {/*  name={this.state.isMuted ? 'volume-off' : 'volume-up'}*/}
             {/*  size={24}*/}
             {/*/>*/}
-            <BackgroundImage source={this.state.isPlaying ? require('./assets/mute.png') : require('./assets/unmute.png')}
+            <BackgroundImage source={this.state.isMuted ? require('./assets/mute.png') : require('./assets/unmute.png')}
                              resizeMode={'contain'}
                              style={{
                                width: 20,
                                height: 20,
-                               marginHorizontal: 5
+                               marginHorizontal: 5,
+                               marginVertical: 10
                              }}/>
           </TouchableOpacity>
         )}
@@ -542,7 +545,8 @@ export default class VideoPlayer extends Component {
                                width: 20,
                                height: 20,
                                marginLeft: 5,
-                               marginRight: 10
+                               marginRight: 10,
+                               marginVertical: 10
                              }}/>
           </TouchableOpacity>
         )}

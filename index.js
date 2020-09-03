@@ -424,31 +424,32 @@ export default class VideoPlayer extends Component {
   renderSeekBar(fullWidth) {
     const {customStyles, disableSeek} = this.props;
 
-    return   <Slider
-      style={[
-        styles.seekBar,
-        fullWidth ? styles.seekBarFullWidth : {},
-        customStyles.seekBar,
-        fullWidth ? customStyles.seekBarFullWidth : {},
-      ]}
-      value={this.state.progress}
-      // step={1}
-      onValueChange={progress => {
+    if (!fullWidth ){
+      return <Slider
+        style={[
+          styles.seekBar,
+          fullWidth ? styles.seekBarFullWidth : {},
+          customStyles.seekBar,
+          fullWidth ? customStyles.seekBarFullWidth : {},
+        ]}
+        value={this.state.progress}
+        // step={1}
+        onValueChange={progress => {
 
-        this.setState({
-          progress:progress,
-        });
+          this.setState({
+            progress:progress,
+          });
 
-        this.player.seek(progress * this.state.duration);
-      }}
+          this.player.seek(progress * this.state.duration);
+        }}
 
-      minimumValue={0}
-      maximumValue={1}
-      minimumTrackTintColor="#FF0062"
-      maximumTrackTintColor={'#ff57a8'}
-      thumbTintColor={'#ff57a8'}
-    />
-
+        minimumValue={0}
+        maximumValue={1}
+        minimumTrackTintColor="#FF0062"
+        maximumTrackTintColor={'#ff57a8'}
+        thumbTintColor={'#ff57a8'}
+      />
+    }
 
     return (
       <View
@@ -476,12 +477,12 @@ export default class VideoPlayer extends Component {
               this.state.isSeeking ? customStyles.seekBarKnobSeeking : {},
             ]}
             hitSlop={{top: 20, bottom: 20, left: 10, right: 20}}
-            onStartShouldSetResponder={this.onSeekStartResponder}
-            onMoveShouldSetPanResponder={this.onSeekMoveResponder}
-            onResponderGrant={this.onSeekGrant}
-            onResponderMove={this.onSeek}
-            onResponderRelease={this.onSeekRelease}
-            onResponderTerminate={this.onSeekRelease}
+            // onStartShouldSetResponder={this.onSeekStartResponder}
+            // onMoveShouldSetPanResponder={this.onSeekMoveResponder}
+            // onResponderGrant={this.onSeekGrant}
+            // onResponderMove={this.onSeek}
+            // onResponderRelease={this.onSeekRelease}
+            // onResponderTerminate={this.onSeekRelease}
           />
         ) : null}
         <View style={[
